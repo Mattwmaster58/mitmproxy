@@ -64,10 +64,10 @@ def decode(
         return _cache.decoded
     try:
         try:
-            decoded = custom_decode[encoding.lower()](encoded)
+            decoded = custom_decode[encoding](encoded)
         except KeyError:
             decoded = codecs.decode(encoded, encoding, errors)  # type: ignore
-        if encoding.lower() in ("gzip", "deflate", "br", "zstd"):
+        if encoding in ("gzip", "deflate", "br", "zstd"):
             _cache = CachedDecode(encoded, encoding, errors, decoded)
         return decoded
     except TypeError:
@@ -120,10 +120,10 @@ def encode(decoded: Union[None, str, bytes], encoding, errors='strict') -> Union
         return _cache.encoded
     try:
         try:
-            encoded = custom_encode[encoding.lower()](decoded)
+            encoded = custom_encode[encoding](decoded)
         except KeyError:
             encoded = codecs.encode(decoded, encoding, errors)  # type: ignore
-        if encoding.lower() in ("gzip", "deflate", "br", "zstd"):
+        if encoding in ("gzip", "deflate", "br", "zstd"):
             _cache = CachedDecode(encoded, encoding, errors, decoded)
         return encoded
     except TypeError:
